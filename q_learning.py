@@ -7,7 +7,7 @@ env.reset()
 #Create Q - table
 q_table_size = [20, 20]
 
-print(env.reset())
+print(env.reset()) 
 
 
 #Create segmentation of Q - Table
@@ -28,7 +28,8 @@ q_table = np.random.uniform(
 	high = 0, 
 	size = (q_table_size + [env.action_space.n])
 	)
-#Load pretrained_q_table
+
+# Load pretrained_q_table
 with open('pretrained_q_table', 'rb') as f:
 	pretrained_q_table = np.load(f)
 
@@ -38,7 +39,7 @@ print(q_table.shape)
 
 learning_rate = 0.1
 discount_factor = 0.9
-eps = 1000 
+eps = 100 
 show_agent = 250
 max_reward = -999
 epsilon = 0.9
@@ -69,8 +70,7 @@ for ep in range(eps):
 			action = np.random.randint(0,env.action_space.n)
 		all_action.append(action)
 
-		#if ep % 100 == 0:
-			#env.render()
+		env.render()
 
 		
 
@@ -111,9 +111,12 @@ accuracy = (reach_goal_counter / eps) *100
 
 print("max reward: {} in ep {},\naction in best episode: {}\nACCURACY = {}%".format(max_reward, ep_max_reward, np.array(action_in_best_episode), accuracy))
 
-#Test action in best episode
+#Test action in final episode
 env.reset()
 env.state = convert_state(final_eps_state)
 for action in action_in_best_episode:
 	env.step(action)
 	env.render()
+
+
+
